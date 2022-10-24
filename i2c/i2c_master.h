@@ -70,13 +70,28 @@
 // i2c is all about yanking-down a 
 // line that by default floats high.
 //
+//	Most i2c slave devices are incredibly tolerant of 
+//	widely different clockspeeds as they're mostly
+//	holding static/stable data in the registers
+//
+//
+//
+//	I've run things like the INA219 down to about 10kHz
+//	and it's fine.  "Results will vary".
+//
+//
+// In this example, we're using the following;
+//
+//		SCL is on PA2 / PORTA.2
+//		SDA is on PA3 / PORTA.3
+//
 //
 uint8_t sda_read(void) {
 	return (PORTA.IN & (1<<PIN2_bp));
 }
 void sda_high(void) {
 	PORTA.DIRCLR = (1<<PIN2_bp);
-	PORTA.OUTCLR = (1<<PIN2_bp);
+	PORTA.OUTCLR = (1<<PIN2_bp); // redundant to be pedantic
 }
 void sda_low(void) {
 	PORTA.DIRSET = (1 << PIN2_bp);
@@ -87,7 +102,7 @@ uint8_t scl_read(void) {
 }
 void scl_high(void) {
 	PORTA.DIRCLR = (1<<PIN3_bp);
-	PORTA.OUTCLR = (1<<PIN3_bp);
+	PORTA.OUTCLR = (1<<PIN3_bp); // redundant to be pedantic
 }
 void scl_low(void) {
 	PORTA.DIRSET = (1 << PIN3_bp);
@@ -99,6 +114,13 @@ void i2c_init() {
 	sda_high();	
 	scl_high();	
 
+	// Set the output configuration
+	// of the pins to zero/low so that
+	// when the data-direction is set
+	// to OUT when we call the sda/scl_low()
+	// routines the port is already going
+	// to be at zero/low state
+	//
 	PORTA.OUT &= ~(1<<PIN2_bp);
 	PORTA.OUT &= ~(1<<PIN3_bp);
 }
