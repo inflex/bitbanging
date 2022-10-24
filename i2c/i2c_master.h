@@ -57,6 +57,19 @@
 // You can pare down the code 
 // as you want.
 //
+// **REMEMBER** you're not trying 
+// to /actively/ drive the SCL/SDA
+// to a high/1 stage, that is done
+// by the 4k7~10k pullup resistors
+// that should be present on the lines.
+//
+// To achieve a high state you have 
+// to make your port let go of the 
+// line so it'll raise up implicitly.
+//
+// i2c is all about yanking-down a 
+// line that by default floats high.
+//
 //
 uint8_t sda_read(void) {
 	return (PORTA.IN & (1<<PIN2_bp));
