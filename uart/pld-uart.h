@@ -1,5 +1,7 @@
 /*****************************************************************
  *
+ * pld-uart.h : 9600-8n1 transmit service with bitbashing only
+ *
  * This software was written by Paul L Daniels - pldaniels@gmail.com
  *
  *
@@ -116,4 +118,4 @@ void uart_serial_send_string( const char *s ) {
 	}
 }
 
-//---------------END uart.h---------------//
+//---------------END pld-uart.h---------------//

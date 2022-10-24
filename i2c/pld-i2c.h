@@ -1,5 +1,7 @@
 /*****************************************************************
  *
+ * pld-i2c.h : i2c master with bitbashing only
+ *
  * This software was written by Paul L Daniels - pldaniels@gmail.com
  *
  *
@@ -295,4 +297,4 @@ uint8_t i2c_start_wait( uint8_t addr ) {
 	return 0;
 }
 
-//-----------------END of i2c_master.h----------------
+//-----------------END of pld-i2c.h----------------
