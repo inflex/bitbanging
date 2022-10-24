@@ -1,6 +1,6 @@
 /*****************************************************************
  *
- * This software was written by Paul L Daniels - pldaniels@pldaniels.com
+ * This software was written by Paul L Daniels - pldaniels@gmail.com
  *
  *
  * NOTES
