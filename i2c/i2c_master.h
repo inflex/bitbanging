@@ -203,8 +203,8 @@ uint8_t i2c_read_byte(uint8_t ack) {
 	if (ack == 1) sda_low();
 	else sda_high();
 	H_DELAY;
-	scl_high();
 
+	scl_high();
 	while (scl_read() == 0); // wait for slave to finish if it's stretching
 	H_DELAY;
 
