@@ -212,7 +212,15 @@ uint8_t i2c_read_byte(uint8_t ack) {
 	for(i=0;i<8;i++) {
 
 		scl_low();
-		sda_high(); // Without this, the uC sent ACK doesn't seem to work
+		// The following sda_high() seems out of place, until you understand
+		// that if we had an ack=1 on the previous read, we will not have had
+		// an opportunity to bring sda back to high until just now because we've
+		// been waiting for scl to be low ( can't change data while scl is high )
+		//
+		// If we didn't have an ack=1 on previous read it doesn't matter anyhow
+		// since sda will already be high at this point; no harm in reasserting
+		//
+		sda_high(); 
 		H_DELAY;
 		scl_high();
 		H_DELAY;
