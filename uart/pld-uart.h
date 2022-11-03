@@ -61,11 +61,12 @@
 //
 //
 // Uncomment these #define's and set them to suit your system
+//
 //#define SET_0 (PORTA.OUT &= ~(1<<PIN0_bp))
 //#define SET_1 (PORTA.OUT |= (1<<PIN0_bp))
 //#define DELAY _delay_us(100)
 
-void uart_tx_byte( uint8_t b ) {
+void uart_send_byte( uint8_t b ) {
 	uint8_t bc = 8; // 8 bits to shove out
 
 	// Start bit
@@ -105,15 +106,15 @@ void uart_tx_byte( uint8_t b ) {
 	DELAY;
 
 	// We're all done.
-} // tx_byte()
+} // uart_send_byte()
 
 
 // Send a nul/zero/'\0' terminated C 
 // string through the serial port
 //
-void uart_serial_send_string( const char *s ) {
+void uart_send_string( const char *s ) {
 	while (*s) {
-		uart_tx_byte(*s);
+		uart_send_byte(*s);
 		s++;
 	}
 }
