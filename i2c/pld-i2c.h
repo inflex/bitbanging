@@ -38,16 +38,6 @@
 #include <util/delay.h>
 #include <avr/io.h>
 
-#define I2C_READ 1
-#define I2C_WRITE 0
-
-// at 100kHz our clock has a 10us period
-// as such our quarter and half delays are
-// set accordingly (whole numbers only though)
-//
-#define Q_DELAY _delay_loop_2(3)
-#define H_DELAY _delay_loop_2(5)
-
 // Set your port I/O codes here
 //
 // This example code is actually 
@@ -88,30 +78,59 @@
 //		SDA is on PA3 / PORTA.3
 //
 //
+//
+#define SDA_PORT PORTA
+#define SDA_PIN PIN2_bp
+
+#define SCL_PORT PORTA
+#define SCL_PIN PIN3_bp
+//
+// From here you shouldn't need to 
+// change any code, in theory ;)
+//
+// ---------------------------------------
+
+
+
+
+// ---------------------------------------
+//
+//
+//
+#define I2C_READ 1
+#define I2C_WRITE 0
+
+// at 100kHz our clock has a 10us period
+// as such our quarter and half delays are
+// set accordingly (whole numbers only though)
+//
+#define Q_DELAY _delay_loop_2(3)
+#define H_DELAY _delay_loop_2(5)
+
 uint8_t sda_read(void) {
-	return (PORTA.IN & (1<<PIN2_bp));
+	return (SDA_PORT.IN & (1<<SDA_PIN));
 }
 void sda_high(void) {
-	PORTA.DIRCLR = (1<<PIN2_bp);
-	PORTA.OUTCLR = (1<<PIN2_bp); // redundant to be pedantic
+	SDA_PORT.DIRCLR = (1<<SDA_PIN);
+	SDA_PORT.OUTCLR = (1<<SDA_PIN);
 }
 void sda_low(void) {
-	PORTA.DIRSET = (1 << PIN2_bp);
+	SDA_PORT.DIRSET = (1<<SDA_PIN);
 }
 
 uint8_t scl_read(void) {
-	return (PORTA.IN & (1<<PIN3_bp));
+	return (SCL_PORT.IN & (1<<SCL_PIN));
 }
 void scl_high(void) {
-	PORTA.DIRCLR = (1<<PIN3_bp);
-	PORTA.OUTCLR = (1<<PIN3_bp); // redundant to be pedantic
+	SCL_PORT.DIRCLR = (1<<SCL_PIN);
+	SCL_PORT.OUTCLR = (1<<SCL_PIN); // redundant to be pedantic
 }
 void scl_low(void) {
-	PORTA.DIRSET = (1 << PIN3_bp);
+	SCL_PORT.DIRSET = (1<<SCL_PIN);
 }
-//
-//
-//
+
+
+
 void i2c_init() {
 	sda_high();	
 	scl_high();	
@@ -123,17 +142,9 @@ void i2c_init() {
 	// routines the port is already going
 	// to be at zero/low state
 	//
-	PORTA.OUT &= ~(1<<PIN2_bp);
-	PORTA.OUT &= ~(1<<PIN3_bp);
+	SDA_PORT.OUT &= ~(1<<SDA_PIN);
+	SCL_PORT.OUT &= ~(1<<SCL_PIN);
 }
-//
-//
-// From here you shouldn't need to 
-// change any code, in theory ;)
-//
-// ---------------------------------------
-
-
 
 
 // i2c_write_byte ( data )
